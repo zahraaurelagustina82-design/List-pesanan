@@ -1,5 +1,7 @@
 // Ganti dengan URL Web App Google Apps Script Anda
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzssMsD4SBRBiVstMk3ZAIzZXej1-xs44XHOXydfSlN-yNrEi0cKngPz-xo4s4S_ksA_g/exec';
+// PENTING: Gunakan URL dari "New deployment" bukan "Test deployments"
+// URL harus berakhiran /exec
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz78kkpT-93cnM09bEJ4oliGCj1Q_V4YsjUzGINfQOZO2keZ03SIcE367IAWRNZB6eIiQ/exec';
 
 const form = document.getElementById('orderForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -44,25 +46,29 @@ form.addEventListener('submit', async (e) => {
     setLoading(true);
     
     try {
+        console.log('Mengirim data:', data);
+        console.log('URL:', SCRIPT_URL);
+        
         const response = await fetch(SCRIPT_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            redirect: 'follow'
         });
         
+        console.log('Response status:', response.status);
+        
         const result = await response.json();
+        console.log('Result:', result);
         
         if (result.status === 'success') {
             showAlert('Pesanan berhasil dikirim!', true);
             form.reset();
         } else {
-            showAlert('Gagal mengirim pesanan. Silakan coba lagi.', false);
+            showAlert('Gagal mengirim pesanan: ' + (result.message || 'Unknown error'), false);
         }
     } catch (error) {
-        console.error('Error:', error);
-        showAlert('Terjadi kesalahan. Silakan coba lagi.', false);
+        console.error('Error detail:', error);
+        showAlert('Terjadi kesalahan: ' + error.message, false);
     } finally {
         setLoading(false);
     }

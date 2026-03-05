@@ -1,5 +1,7 @@
 // Ganti dengan URL Web App Google Apps Script Anda
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzssMsD4SBRBiVstMk3ZAIzZXej1-xs44XHOXydfSlN-yNrEi0cKngPz-xo4s4S_ksA_g/exec';
+// PENTING: Gunakan URL dari "New deployment" bukan "Test deployments"
+// URL harus berakhiran /exec
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz78kkpT-93cnM09bEJ4oliGCj1Q_V4YsjUzGINfQOZO2keZ03SIcE367IAWRNZB6eIiQ/exec';
 
 const refreshBtn = document.getElementById('refreshBtn');
 const searchInput = document.getElementById('searchInput');
